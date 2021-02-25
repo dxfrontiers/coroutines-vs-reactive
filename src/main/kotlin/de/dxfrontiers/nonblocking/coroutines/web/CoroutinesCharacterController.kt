@@ -1,40 +1,21 @@
 package de.dxfrontiers.nonblocking.coroutines.web
 
-import de.dxfrontiers.nonblocking.coroutines.service.CoroutinesCharacterService
-import de.dxfrontiers.nonblocking.exceptions.CharacterNotFoundException
-import de.dxfrontiers.nonblocking.model.persistence.Character
-import kotlinx.coroutines.flow.Flow
-import org.springframework.http.ResponseEntity
-import org.springframework.http.server.reactive.ServerHttpResponse
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("coroutines/characters")
-class CoroutinesCharacterController(private val coroutinesCharacterService: CoroutinesCharacterService) {
+class CoroutinesCharacterController {
 
     @GetMapping
-    fun findByName(@RequestParam lastName: String): Flow<Character> =
-        coroutinesCharacterService.findByLastName(lastName)
+    fun findByName(@RequestParam lastName: String): Nothing = TODO()
 
     @GetMapping("/{id}")
-    suspend fun findById(@PathVariable id: Long): Character? =
-        coroutinesCharacterService.findById(id)
+    suspend fun findById(@PathVariable id: Long): Nothing = TODO()
 
     @PutMapping
-    suspend fun addCharacter(@RequestParam firstName: String, @RequestParam lastName: String, response: ServerHttpResponse): ResponseEntity<String> {
-        return try {
-            val character = coroutinesCharacterService.addCharacter(firstName, lastName)
-
-            character?.let {
-                ResponseEntity.accepted().build()
-            } ?: run { ResponseEntity.ok().build() }
-        } catch (ex: CharacterNotFoundException) {
-            ResponseEntity.badRequest().body(ex.message)
-        }
-    }
+    suspend fun addCharacter(@RequestParam firstName: String, @RequestParam lastName: String): Nothing = TODO()
 
     @DeleteMapping
-    suspend fun deleteByName(@RequestParam firstName: String, @RequestParam lastName: String) =
-        coroutinesCharacterService.deleteByName(firstName, lastName)
+    suspend fun deleteByName(@RequestParam firstName: String, @RequestParam lastName: String): Nothing = TODO()
 
 }

@@ -1,13 +1,10 @@
 package de.dxfrontiers.nonblocking.reactive.persistence
 
-import de.dxfrontiers.nonblocking.model.persistence.House
-import org.springframework.data.r2dbc.repository.Query
-import org.springframework.data.repository.reactive.ReactiveCrudRepository
-import reactor.core.publisher.Mono
+import org.springframework.stereotype.Repository
 
-interface ReactiveHouseRepository : ReactiveCrudRepository<House, Long> {
+@Repository
+interface ReactiveHouseRepository {
 
-    @Query("SELECT * FROM HOUSES WHERE NAME = :name")
-    fun findByName(name: String): Mono<House>
+    fun findByName(name: String)
 
 }
