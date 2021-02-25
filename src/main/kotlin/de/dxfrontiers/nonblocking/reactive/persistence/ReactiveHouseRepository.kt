@@ -5,7 +5,7 @@ import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Mono
 
-interface HouseRepository : ReactiveCrudRepository<House, Long> {
+interface ReactiveHouseRepository : ReactiveCrudRepository<House, Long> {
 
     @Query("SELECT * FROM HOUSES WHERE NAME = :name")
     fun findByName(name: String): Mono<House>

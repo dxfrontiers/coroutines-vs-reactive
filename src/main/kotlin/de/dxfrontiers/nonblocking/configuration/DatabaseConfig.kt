@@ -1,4 +1,4 @@
-package de.dxfrontiers.nonblocking.reactive.configuration
+package de.dxfrontiers.nonblocking.configuration
 
 import io.r2dbc.spi.ConnectionFactory
 import org.springframework.context.annotation.Bean
