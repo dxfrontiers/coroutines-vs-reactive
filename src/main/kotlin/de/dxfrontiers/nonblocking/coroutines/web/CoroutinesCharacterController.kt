@@ -5,7 +5,6 @@ import de.dxfrontiers.nonblocking.exceptions.CharacterNotFoundException
 import de.dxfrontiers.nonblocking.model.persistence.Character
 import kotlinx.coroutines.flow.Flow
 import org.springframework.http.ResponseEntity
-import org.springframework.http.server.reactive.ServerHttpResponse
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -21,7 +20,7 @@ class CoroutinesCharacterController(private val coroutinesCharacterService: Coro
         coroutinesCharacterService.findById(id)
 
     @PutMapping
-    suspend fun addCharacter(@RequestParam firstName: String, @RequestParam lastName: String, response: ServerHttpResponse): ResponseEntity<String> {
+    suspend fun addCharacter(@RequestParam firstName: String, @RequestParam lastName: String): ResponseEntity<String> {
         return try {
             val character = coroutinesCharacterService.addCharacter(firstName, lastName)
 
