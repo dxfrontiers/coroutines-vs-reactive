@@ -9,7 +9,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <kotlin.version>1.4.30</kotlin.version>
+        <kotlin.version>1.4.32</kotlin.version>
         <kotlinx-coroutines.version>1.4.2</kotlinx-coroutines.version>
         <spring-boot.version>2.4.2</spring-boot.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
@@ -118,6 +118,18 @@
                         <plugin>no-arg</plugin>
                     </compilerPlugins>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>compile</id>
