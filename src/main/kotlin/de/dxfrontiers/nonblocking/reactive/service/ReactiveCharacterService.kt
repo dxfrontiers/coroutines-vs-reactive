@@ -21,9 +21,7 @@ class ReactiveCharacterService(private val reactiveHouseService: ReactiveHouseSe
     fun deleteByName(firstName: String, lastName: String): Mono<Void> =
         reactiveCharacterRepository
             .findByFirstNameAndLastName(firstName, lastName)
-            .doOnNext {
-                reactiveCharacterRepository.deleteById(it.id!!)
-            }.then()
+            .flatMap { reactiveCharacterRepository.deleteById(it.id!!) }
 
     fun addCharacter(firstName: String, lastName: String): Mono<Character> =
         reactiveCharacterRepository
