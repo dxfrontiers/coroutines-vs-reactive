@@ -11,20 +11,20 @@ class CoroutinesCharacterService(private val coroutinesHouseService: CoroutinesH
                                  private val coroutinesCharacterRepository: CoroutinesCharacterRepository) {
 
     fun findByLastName(lastName: String): Flow<Character> =
-        coroutinesCharacterRepository.findByFamilyName(lastName)
+        coroutinesCharacterRepository.findByLastName(lastName)
 
     suspend fun findById(id: Long): Character? =
         coroutinesCharacterRepository.findById(id)
 
     suspend fun deleteByName(firstName: String, lastName: String) =
         coroutinesCharacterRepository
-            .findByName(firstName, lastName)
+            .findByFirstNameAndLastName(firstName, lastName)
             ?.let {
                 coroutinesCharacterRepository.deleteById(it.id!!)
             }
 
     suspend fun addCharacter(firstName: String, lastName: String): Character? =
-        if (coroutinesCharacterRepository.exists(firstName, lastName)) {
+        if (coroutinesCharacterRepository.existsByFirstNameAndLastName(firstName, lastName)) {
             null
         } else {
             coroutinesHouseService.findByName(lastName)

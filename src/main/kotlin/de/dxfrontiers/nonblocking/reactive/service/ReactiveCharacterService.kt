@@ -13,21 +13,21 @@ class ReactiveCharacterService(private val reactiveHouseService: ReactiveHouseSe
                                private val reactiveCharacterRepository: ReactiveCharacterRepository) {
 
     fun findByLastName(lastName: String): Flux<Character> =
-        reactiveCharacterRepository.findByFamilyName(lastName)
+        reactiveCharacterRepository.findByLastName(lastName)
 
     fun findById(id: Long): Mono<Character> =
         reactiveCharacterRepository.findById(id)
 
     fun deleteByName(firstName: String, lastName: String): Mono<Void> =
         reactiveCharacterRepository
-            .findByName(firstName, lastName)
+            .findByFirstNameAndLastName(firstName, lastName)
             .doOnNext {
                 reactiveCharacterRepository.deleteById(it.id!!)
             }.then()
 
     fun addCharacter(firstName: String, lastName: String): Mono<Character> =
         reactiveCharacterRepository
-            .exists(firstName, lastName)
+            .existsByFirstNameAndLastName(firstName, lastName)
             .filter { it == false }
             .flatMap {
                 reactiveHouseService
