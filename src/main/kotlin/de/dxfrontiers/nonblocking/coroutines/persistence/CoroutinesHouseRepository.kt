@@ -5,6 +5,6 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface CoroutinesHouseRepository : CoroutineCrudRepository<House, Long> {
 
-    fun findByName(name: String): House?
+    suspend fun findByName(name: String): House?
 
 }
