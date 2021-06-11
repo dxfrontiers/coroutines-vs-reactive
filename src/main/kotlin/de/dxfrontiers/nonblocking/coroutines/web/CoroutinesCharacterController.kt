@@ -4,6 +4,7 @@ import de.dxfrontiers.nonblocking.coroutines.service.CoroutinesCharacterService
 import de.dxfrontiers.nonblocking.exceptions.CharacterNotFoundException
 import de.dxfrontiers.nonblocking.model.persistence.Character
 import kotlinx.coroutines.flow.Flow
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -25,7 +26,7 @@ class CoroutinesCharacterController(private val coroutinesCharacterService: Coro
             val character = coroutinesCharacterService.addCharacter(firstName, lastName)
 
             character?.let {
-                ResponseEntity.accepted().build()
+                ResponseEntity.status(HttpStatus.CREATED).build()
             } ?: run { ResponseEntity.ok().build() }
         } catch (ex: CharacterNotFoundException) {
             ResponseEntity.badRequest().body(ex.message)
