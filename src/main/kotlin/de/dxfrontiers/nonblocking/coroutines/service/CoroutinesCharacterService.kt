@@ -23,24 +23,12 @@ class CoroutinesCharacterService(private val coroutinesHouseService: CoroutinesH
                 coroutinesCharacterRepository.deleteById(it.id!!)
             }
 
-    suspend fun addCharacter(firstName: String, lastName: String): Character? {
-        val exists = coroutinesCharacterRepository.exists(firstName, lastName)
-
-        if (!exists) {
-            val house = coroutinesHouseService.findByName(lastName)
-            val character = house?.let {
-                coroutinesCharacterRepository.save(
-                    Character(
-                        firstName = firstName,
-                        lastName = lastName,
-                        house = it.id!!
-                    )
-                )
-            } ?: run { throw CharacterNotFoundException("No valid house found for the character $firstName $lastName!") }
-
-            return character
+    suspend fun addCharacter(firstName: String, lastName: String): Character? =
+        if (coroutinesCharacterRepository.exists(firstName, lastName)) {
+            null
+        } else {
+            coroutinesHouseService.findByName(lastName)
+                    ?.let { coroutinesCharacterRepository.save(Character(firstName = firstName, lastName = lastName, house = it.id!!)) }
+                    ?: run { throw CharacterNotFoundException("No valid house found for the character $firstName $lastName!") }
         }
-
-        return null
-    }
 }
