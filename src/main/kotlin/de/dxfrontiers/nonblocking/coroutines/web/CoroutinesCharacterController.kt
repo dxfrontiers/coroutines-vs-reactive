@@ -27,7 +27,7 @@ class CoroutinesCharacterController(private val coroutinesCharacterService: Coro
 
             character?.let {
                 ResponseEntity.status(HttpStatus.CREATED).build()
-            } ?: run { ResponseEntity.ok().build() }
+            } ?: ResponseEntity.ok().build()
         } catch (ex: CharacterNotFoundException) {
             ResponseEntity.badRequest().body(ex.message)
         }

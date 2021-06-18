@@ -29,6 +29,6 @@ class CoroutinesCharacterService(private val coroutinesHouseService: CoroutinesH
         } else {
             coroutinesHouseService.findByName(lastName)
                     ?.let { coroutinesCharacterRepository.save(Character(firstName = firstName, lastName = lastName, house = it.id!!)) }
-                    ?: run { throw CharacterNotFoundException("No valid house found for the character $firstName $lastName!") }
+                    ?: throw CharacterNotFoundException("No valid house found for the character $firstName $lastName!")
         }
 }
