@@ -1,4 +1,4 @@
-# Coroutines vs. Reactive Programming
+# Imperative vs. Coroutines vs. Reactive Programming
 
-Sample project showing differences in the programming style of coroutines
-and reactive programming (using the Spring Reactor framework).
+Sample project showing differences in the programming style of imperative programming,
+coroutines and reactive programming (using Spring WebMVC and the Spring Reactor frameworks).
