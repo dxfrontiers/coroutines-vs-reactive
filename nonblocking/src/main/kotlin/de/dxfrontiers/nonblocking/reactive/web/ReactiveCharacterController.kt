@@ -3,6 +3,7 @@ package de.dxfrontiers.nonblocking.reactive.web
 import de.dxfrontiers.nonblocking.exceptions.CharacterNotFoundException
 import de.dxfrontiers.nonblocking.model.persistence.Character
 import de.dxfrontiers.nonblocking.reactive.service.ReactiveCharacterService
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -26,6 +27,7 @@ class ReactiveCharacterController(private val reactiveCharacterService: Reactive
     fun addCharacter(@RequestParam firstName: String, @RequestParam lastName: String): Mono<ResponseEntity<String>> =
         reactiveCharacterService
             .addCharacter(firstName, lastName)
+            .doOnError { log.warn("Request to addCharacter($firstName, $lastName) failed: ${it.message}") }
             .map { ResponseEntity.status(HttpStatus.CREATED).build<String>() }
             .switchIfEmpty { Mono.just(ResponseEntity.ok().build()) }
             .onErrorResume(CharacterNotFoundException::class.java) {
@@ -36,4 +38,7 @@ class ReactiveCharacterController(private val reactiveCharacterService: Reactive
     fun deleteByName(@RequestParam firstName: String, @RequestParam lastName: String): Mono<Void> =
         reactiveCharacterService.deleteByName(firstName, lastName)
 
+    companion object {
+        private val log = LoggerFactory.getLogger(ReactiveCharacterController::class.java)
+    }
 }
