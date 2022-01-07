@@ -30,7 +30,7 @@ class ReactiveCharacterController(private val reactiveCharacterService: Reactive
             .switchIfEmpty { Mono.just(ResponseEntity.ok().build()) }
             .onErrorResume(CharacterNotFoundException::class.java) {
                 Mono.just(ResponseEntity.badRequest().body(it.message))
-            }
+            }.log("addCharacter")
 
     @DeleteMapping
     fun deleteByName(@RequestParam firstName: String, @RequestParam lastName: String): Mono<Void> =
