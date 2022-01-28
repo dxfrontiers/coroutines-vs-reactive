@@ -32,4 +32,5 @@ class ReactiveCharacterService(private val reactiveHouseService: ReactiveHouseSe
                     .findByName(lastName)
                     .switchIfEmpty { Mono.error { CharacterNotFoundException("No valid house found for the character $firstName $lastName!") }}
             }.flatMap { reactiveCharacterRepository.save(Character(firstName = firstName, lastName = lastName, house = it.id!!)) }
+            .checkpoint("ReactiveCharacterService#addCharacter($firstName: String, $lastName: String)")
 }
